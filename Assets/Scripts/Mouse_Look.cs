@@ -27,9 +27,9 @@ public class Mouse_Look : MonoBehaviour
         transform.localRotation = Quaternion.Euler(x_Rotation, 0f, 0f);
         Player_Body.Rotate(Vector3.up * mouseX);
         
-        Debug.Log("mouse X:  " + mouseX);
-        Debug.Log("mouse Y:  " + mouseY);
-        Debug.Log("x_Rotation:   " + x_Rotation);
+        //Debug.Log("mouse X:  " + mouseX);
+        //Debug.Log("mouse Y:  " + mouseY);
+        //Debug.Log("x_Rotation:   " + x_Rotation); // TODO mouse sensetivity is effected by amount of object in the crean or FPS
     }
 }
 

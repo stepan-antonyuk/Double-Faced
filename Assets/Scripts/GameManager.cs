@@ -72,7 +72,7 @@ public class GameManager : MonoBehaviour
     private void ChangeUpdate()
     {
        changeStageR();
-       changeStageW();;
+       changeStageW();
     }
 }
 
