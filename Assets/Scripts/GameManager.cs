@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour
 {
     
     GameObject[] objs;
-    public float Delay = 3000f;
+    //public float Delay = 3f;
     public bool Rstate = false;
 
     // Start is called before the first frame update
@@ -18,9 +18,9 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKey("r"))
+        if(Input.GetKeyDown("r"))
         {
-            StartCoroutine(waiter());
+            ChangeUpdate();
         }
     }
     
@@ -66,11 +66,10 @@ public class GameManager : MonoBehaviour
     }
     
     
-    IEnumerator waiter() // TODO
+    private void ChangeUpdate()
     {
-        yield return new WaitForSeconds(Delay);
-        changeStageR();
-        changeStageW();
+       changeStageR();
+       changeStageW();;
     }
 }
 
