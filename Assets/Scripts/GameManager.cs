@@ -8,6 +8,9 @@ public class GameManager : MonoBehaviour
     GameObject[] objs;
     //public float Delay = 3f;
     public bool Rstate = false;
+    string WhiteCube = "WhiteCube";
+    string RedCube = "RedCube";
+    string ChangePhase = "r";
 
     // Start is called before the first frame update
     void Start()
@@ -18,7 +21,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown("r"))
+        if(Input.GetKeyDown(ChangePhase))
         {
             ChangeUpdate();
         }
@@ -27,7 +30,7 @@ public class GameManager : MonoBehaviour
     
     private void changeStageR()
     {
-         objs = GameObject.FindGameObjectsWithTag("RCube");
+         objs = GameObject.FindGameObjectsWithTag(RedCube);
          foreach(GameObject lightuser in objs) 
          {
             lightuser.gameObject.GetComponent<Collider>().enabled = !lightuser.gameObject.GetComponent<Collider>().enabled;
@@ -39,7 +42,7 @@ public class GameManager : MonoBehaviour
     
     private void changeStageW()
     {
-         objs = GameObject.FindGameObjectsWithTag("WCube");
+         objs = GameObject.FindGameObjectsWithTag(WhiteCube);
          foreach(GameObject lightuser in objs) 
          {
             lightuser.gameObject.GetComponent<Collider>().enabled = !lightuser.gameObject.GetComponent<Collider>().enabled;
@@ -51,13 +54,13 @@ public class GameManager : MonoBehaviour
     
     private void StateTheState()
     {
-        objs = GameObject.FindGameObjectsWithTag("RCube");
+        objs = GameObject.FindGameObjectsWithTag(RedCube);
          foreach(GameObject lightuser in objs) 
          {
             lightuser.gameObject.GetComponent<Collider>().enabled = Rstate;
             lightuser.gameObject.GetComponent<Renderer>().enabled = Rstate;
          }
-         objs = GameObject.FindGameObjectsWithTag("WCube");
+         objs = GameObject.FindGameObjectsWithTag(WhiteCube);
          foreach(GameObject lightuser in objs) 
          {
             lightuser.gameObject.GetComponent<Collider>().enabled = !Rstate;

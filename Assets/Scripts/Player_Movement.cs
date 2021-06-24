@@ -20,7 +20,7 @@ public class Player_Movement : MonoBehaviour
     
     float x;
     float z;
-    float costumeMode = 0f;
+    //float costumeMode = 0f;
     
     bool isGCfeelsGrounded;
     bool isGCfeelsWalled;
@@ -55,7 +55,7 @@ public class Player_Movement : MonoBehaviour
         PremissionToJump();
         
         // modificated added "&& onTheGround" make player unable to hold to the wall while standing on it or on the ground.
-        if((Input.GetKey("left ctrl") && isWCfeelsWalled ) && !onTheGround)
+        if((Input.GetKey("left ctrl") && isWCfeelsWalled ) && !onTheGround) // TODO change Input.GetKey("left ctrl") to Input.GetKeyDown("left ctrl")
         {
             HoldForWall();
         }
