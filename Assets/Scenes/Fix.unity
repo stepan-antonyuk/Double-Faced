@@ -61971,13 +61971,15 @@ MonoBehaviour:
   controller: {fileID: 1250992278}
   GC: {fileID: 661134514}
   WC: {fileID: 2067527397}
-  speed: 30
+  walk_speed: 12
+  run_speed: 24
   gravity: -50
   GDistance: 0.4
   WDistance: 2
   Jump_Height: 3
   noraml_State: -2
   slippery: 0
+  alwaysRun: 1
   groundMask:
     serializedVersion: 2
     m_Bits: 64

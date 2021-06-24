@@ -6,20 +6,29 @@ public class Player_Movement : MonoBehaviour
 {
 
     public CharacterController controller;
+    
     public Transform GC;
     public Transform WC;
-    public float speed = 12f;
+    
+    public float walk_speed = 12f;
+    public float run_speed = 24f;
     public float gravity = -9.81f;
     public float GDistance = 0.4f;
     public float WDistance = 2f;
     public float Jump_Height = 3f;
     public float noraml_State = -2f;
     public float slippery = 0f;
+    
+    public bool alwaysRun = true;
+    
+    public string HoldButton = "left ctrl";
+    
     public LayerMask groundMask;
     public LayerMask WallMask;
     
     float x;
     float z;
+    float current_speed;
     //float costumeMode = 0f;
     
     bool isGCfeelsGrounded;
@@ -49,34 +58,24 @@ public class Player_Movement : MonoBehaviour
         MoveUpdate();
         
         
-        isOnTheGround();
         isPlayerJustHitTheGround();
         
-        PremissionToJump();
+        
+        //check for left shift pressed. Players runs or not. Just currects player's speed.
+        Move();
+        
         
         // modificated added "&& onTheGround" make player unable to hold to the wall while standing on it or on the ground.
-        if((Input.GetKey("left ctrl") && isWCfeelsWalled ) && !onTheGround) // TODO change Input.GetKey("left ctrl") to Input.GetKeyDown("left ctrl")
-        {
-            HoldForWall();
-        }
-        else
-        {
-            LetTheWallGo();
-        }
+        // if holding wall STOP MOVING and slip or else just fall
+        isHoldTheWallButtonPressed();
+        
         
         //if on the ground and pressing space to jump
-        if(Input.GetButtonDown("Jump") && canIjump) // TODO I need to fix jump so that ctrl will not effect unitl it pressed again.
-        {
-            Jump();
-            LetTheWallGo();
-        }
+        isJumping();
         
         
-        // if holding wall STOP MOVING and slip or else just fall
-        isPlayerHoldingTheWall();
-        
-        // Move section 
-        Move();
+        // Move character 
+        MoveCharacter();
         
         
         //Debug section
@@ -89,6 +88,21 @@ public class Player_Movement : MonoBehaviour
     {
         //Debug.Log("Check_Jump");
         velocity.y = Mathf.Sqrt(Jump_Height * -2f * gravity);
+    }
+    
+    
+    private void isJumping()
+    {
+        if(Input.GetButtonDown("Jump")) // TODO I need to fix jump so that ctrl will not effect unitl it pressed again.
+        {
+            PremissionToJump();
+            
+            if(canIjump)
+            {
+                Jump();
+                LetTheWallGo();
+            }
+        }
     }
     
     
@@ -107,11 +121,62 @@ public class Player_Movement : MonoBehaviour
     }
     
     
+    private void Run()
+    {
+        current_speed = run_speed;
+    }
+    
+    
+    private void Walk()
+    {
+        current_speed = walk_speed;
+    }
+    
+    
+    private void isRunning()
+    {
+        if(Input.GetKey("left shift"))
+        {
+            Run();
+        }
+        else
+        {
+            Walk();
+        }
+    }
+    
+    
+    private void isWalking()
+    {
+        if(Input.GetKey("left shift"))
+        {
+            Walk();
+        }
+        else
+        {
+            Run();
+        }
+    }
+    
+    
     private void Move()
+    {
+        if(alwaysRun)
+        {
+            isWalking();
+        }
+        else
+        {
+            isRunning();
+        }
+    }
+    
+    
+    private void MoveCharacter()
     {  
         //Move player by x and z
         Vector3 move = transform.right * x + transform.forward * z;        
-        controller.Move(move * speed * Time.deltaTime);
+        controller.Move(move * current_speed * Time.deltaTime);
         //fall, move player by z
         controller.Move(velocity * Time.deltaTime);
     }
@@ -145,6 +210,21 @@ public class Player_Movement : MonoBehaviour
     }
     
     
+    private void isHoldTheWallButtonPressed()
+    {
+        if((Input.GetKey(HoldButton) && isWCfeelsWalled ) && !onTheGround) // TODO change Input.GetKey("left ctrl") to Input.GetKeyDown("left ctrl")
+        {
+            HoldForWall();
+        }
+        else
+        {
+            LetTheWallGo();
+        }
+        
+        isPlayerHoldingTheWall();
+    }
+    
+    
     private void isOnTheGround()
     {
         if(isGCfeelsGrounded || isGCfeelsWalled)
@@ -159,7 +239,9 @@ public class Player_Movement : MonoBehaviour
     
     
     private void isPlayerJustHitTheGround()
-    {
+    { 
+        isOnTheGround();
+        
         if(onTheGround && velocity.y < 0) // modificated added "onTheGround &&"
         {
             Stand();
@@ -218,11 +300,12 @@ public class Player_Movement : MonoBehaviour
     
     private void DebugBug()
     {
-        Debug.Log("-----------------------------------");
+        //Debug.Log("-----------------------------------");
         //Debug.Log(Input.GetKey("left ctrl"));
         //Debug.Log(isGCfeelsGrounded);
         //Debug.Log(isGCfeelsWalled);
         //Debug.Log(isWCfeelsWalled);
+        //Debug.Log(current_speed);
     }
     
     
