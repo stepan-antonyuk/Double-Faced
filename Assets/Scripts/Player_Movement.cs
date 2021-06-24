@@ -300,12 +300,13 @@ public class Player_Movement : MonoBehaviour
     
     private void DebugBug()
     {
-        //Debug.Log("-----------------------------------");
+        Debug.Log("-----------------------------------");
         //Debug.Log(Input.GetKey("left ctrl"));
-        //Debug.Log(isGCfeelsGrounded);
-        //Debug.Log(isGCfeelsWalled);
-        //Debug.Log(isWCfeelsWalled);
+        Debug.Log(isGCfeelsGrounded);
+        Debug.Log(isGCfeelsWalled);
+        Debug.Log(isWCfeelsWalled);
         //Debug.Log(current_speed);
+        Debug.Log(velocity.y);
     }
     
     

@@ -61974,12 +61974,13 @@ MonoBehaviour:
   walk_speed: 12
   run_speed: 24
   gravity: -50
-  GDistance: 0.4
+  GDistance: 0.54
   WDistance: 2
   Jump_Height: 3
   noraml_State: -2
   slippery: 0
   alwaysRun: 1
+  HoldButton: left ctrl
   groundMask:
     serializedVersion: 2
     m_Bits: 64
