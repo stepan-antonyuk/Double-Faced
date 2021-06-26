@@ -20,6 +20,7 @@ public class Player_Movement : MonoBehaviour
     public float slippery = 0f;
     
     public bool alwaysRun = true;
+    public bool MouseCST = true;
     
     public string HoldButton = "left ctrl";
     
@@ -67,7 +68,9 @@ public class Player_Movement : MonoBehaviour
         
         // modificated added "&& onTheGround" make player unable to hold to the wall while standing on it or on the ground.
         // if holding wall STOP MOVING and slip or else just fall
-        isHoldTheWallButtonPressed();
+        //isHoldTheWallButtonPressed();
+        //isHoldTheWallMouseButtonPressed();
+        HoldButtonPressed();
         
         
         //if on the ground and pressing space to jump
@@ -222,19 +225,42 @@ public class Player_Movement : MonoBehaviour
         }
         
         isPlayerHoldingTheWall();
+        //Debug.Log("++++++++++++++++++++++++++++++");
+    }
+    
+    
+    private void isHoldTheWallMouseButtonPressed()
+    {
+        if((Input.GetMouseButton(1) && isWCfeelsWalled ) && !onTheGround) // TODO change Input.GetKey("left ctrl") to Input.GetKeyDown("left ctrl")
+        {
+            HoldForWall();
+        }
+        else
+        {
+            LetTheWallGo();
+        }
+        
+        isPlayerHoldingTheWall();
+        //Debug.Log("||||||||||||||||||||||||||||||");
+    }
+    
+    
+    private void HoldButtonPressed()
+    {
+        if(MouseCST)
+        {
+            isHoldTheWallMouseButtonPressed();
+        }
+        else
+        {
+            isHoldTheWallButtonPressed();
+        }
     }
     
     
     private void isOnTheGround()
     {
-        if(isGCfeelsGrounded || isGCfeelsWalled)
-        {
-            onTheGround = true;
-        }
-        else
-        {
-            onTheGround = false;
-        }
+        onTheGround = isGCfeelsGrounded || isGCfeelsWalled; // TODO change every thing too
     }
     
     
@@ -253,29 +279,13 @@ public class Player_Movement : MonoBehaviour
     {
         // if player fells the wall with his wall chacker or on the ground. It make player able to jump from the wall without need of holding it
         
-        isThereAnyObjectnNear();
-        
-        if(isThereAnObjectnNear)
-        {
-            canIjump = true;
-        }
-        else
-        {
-            canIjump = false;
-        }
+        canIjump = isThereAnyObjectnNear();
     }
     
     
-    public void isThereAnyObjectnNear()
+    public bool isThereAnyObjectnNear()
     {
-        if(onTheGround || isWCfeelsWalled)
-        {
-            isThereAnObjectnNear = true;
-        }
-        else
-        {
-            isThereAnObjectnNear = false;
-        }
+        return onTheGround || isWCfeelsWalled;
     }
     
     
@@ -300,13 +310,13 @@ public class Player_Movement : MonoBehaviour
     
     private void DebugBug()
     {
-        Debug.Log("-----------------------------------");
+        //Debug.Log("-----------------------------------");
         //Debug.Log(Input.GetKey("left ctrl"));
-        Debug.Log(isGCfeelsGrounded);
-        Debug.Log(isGCfeelsWalled);
-        Debug.Log(isWCfeelsWalled);
+        //Debug.Log(isGCfeelsGrounded);
+        //Debug.Log(isGCfeelsWalled);
+        //Debug.Log(isWCfeelsWalled);
         //Debug.Log(current_speed);
-        Debug.Log(velocity.y);
+        //Debug.Log(velocity.y);        
     }
     
     

@@ -61980,6 +61980,7 @@ MonoBehaviour:
   noraml_State: -2
   slippery: 0
   alwaysRun: 1
+  MouseCST: 1
   HoldButton: left ctrl
   groundMask:
     serializedVersion: 2
