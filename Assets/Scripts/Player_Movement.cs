@@ -12,17 +12,30 @@ public class Player_Movement : MonoBehaviour
     
     public float walk_speed = 12f;
     public float run_speed = 24f;
+    public float crouch_speed = 6f;
     public float gravity = -9.81f;
     public float GDistance = 0.4f;
     public float WDistance = 2f;
     public float Jump_Height = 3f;
     public float noraml_State = -2f;
     public float slippery = 0f;
+    //public float originalHeight = 3.8f;
+    //public float originalHeight = controller.height;
+    public float crouchingHeight = 1.9f;
+    
+    public int MouseHoldButton = 1; // can be 0,1,2
     
     public bool alwaysRun = true;
     public bool MouseCST = true;
+    //private bool isCrouching = false;
     
     public string HoldButton = "left ctrl";
+    public string PlayerTag = "Player";
+    public string RunButton = "left shift";
+
+    //public Vector3 originalCenter = new Vector3(0f, 0f, 0f);
+    //public Vector3 originalCenter = controller.center;
+    public Vector3 crouchingCenter = new Vector3(0f, -0.5f, 0f);
     
     public LayerMask groundMask;
     public LayerMask WallMask;
@@ -30,6 +43,7 @@ public class Player_Movement : MonoBehaviour
     float x;
     float z;
     float current_speed;
+    float originalHeight;
     //float costumeMode = 0f;
     
     bool isGCfeelsGrounded;
@@ -39,14 +53,19 @@ public class Player_Movement : MonoBehaviour
     bool onTheGround;
     bool canIjump;
     bool isThereAnObjectnNear;
+    bool isCrouching;
     
     Vector3 velocity;
+    Vector3 originalCenter;
+    
+
+
     
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        SetPlayer();
     }
 
     // Update is called once per frame
@@ -151,7 +170,7 @@ public class Player_Movement : MonoBehaviour
     
     private void isWalking()
     {
-        if(Input.GetKey("left shift"))
+        if(Input.GetKey(RunButton))
         {
             Walk();
         }
@@ -231,7 +250,7 @@ public class Player_Movement : MonoBehaviour
     
     private void isHoldTheWallMouseButtonPressed()
     {
-        if((Input.GetMouseButton(1) && isWCfeelsWalled ) && !onTheGround) // TODO change Input.GetKey("left ctrl") to Input.GetKeyDown("left ctrl")
+        if((Input.GetMouseButton(MouseHoldButton) && isWCfeelsWalled ) && !onTheGround) // TODO change Input.GetKey("left ctrl") to Input.GetKeyDown("left ctrl")
         {
             HoldForWall();
         }
@@ -260,7 +279,7 @@ public class Player_Movement : MonoBehaviour
     
     private void isOnTheGround()
     {
-        onTheGround = isGCfeelsGrounded || isGCfeelsWalled; // TODO change every thing too
+        onTheGround = isGCfeelsGrounded || isGCfeelsWalled;
     }
     
     
@@ -308,15 +327,62 @@ public class Player_Movement : MonoBehaviour
     }
     
     
+    private void SetPlayer()
+    {
+        transform.tag = PlayerTag;
+        controller = GetComponent<CharacterController>();   
+        originalCenter = controller.center;
+        originalHeight = controller.height;
+        current_speed = walk_speed;  
+    }
+    
+    
+    private void CheckCrouchingButton()
+    {
+        if(Input.GetButtonDown("Crouch")) {
+            Crouching();
+        }
+        else if(!Input.GetButton("Crouch") && isCrouching)
+        {
+            StopCrouching();
+        }
+    }
+    
+    
+    private void Crouching()
+    {
+        controller.height = crouchingHeight;
+        controller.center = crouchingCenter;
+        current_speed = crouch_speed;
+        isCrouching = true;
+    }
+    
+    
+    private void StopCrouching()
+    {
+        Vector3 point0 = transform.position + originalCenter - new Vector3(0.0f, originalHeight, 0.0f);           
+        Vector3 point1 = transform.position + originalCenter + new Vector3(0.0f, originalHeight, 0.0f);
+        
+        if (Physics.OverlapCapsule(point0, point1, controller.radius).Length == 0) 
+        {
+           controller.height = originalHeight;
+           controller.center = originalCenter;
+           current_speed = walk_speed;
+           isCrouching = false;
+        }
+    }
+    
+    
     private void DebugBug()
     {
-        //Debug.Log("-----------------------------------");
+        Debug.Log("-----------------------------------");
         //Debug.Log(Input.GetKey("left ctrl"));
         //Debug.Log(isGCfeelsGrounded);
         //Debug.Log(isGCfeelsWalled);
         //Debug.Log(isWCfeelsWalled);
         //Debug.Log(current_speed);
-        //Debug.Log(velocity.y);        
+        //Debug.Log(velocity.y); 
+        Debug.Log(isCrouching);        
     }
     
     
