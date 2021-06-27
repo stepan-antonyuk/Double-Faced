@@ -57,6 +57,7 @@ public class Player_Movement : MonoBehaviour
     bool canIjump;
     bool isThereAnObjectnNear;
     bool isCrouching;
+    bool already_moved_GC;
     
     Vector3 velocity;
     Vector3 originalCenter;
@@ -341,8 +342,9 @@ public class Player_Movement : MonoBehaviour
         originalCenter = controller.center;
         originalHeight = controller.height;
         current_speed = walk_speed;  
-        Debug.Log(originalCenter);
-        Debug.Log(originalHeight);
+        already_moved_GC = false;
+        //Debug.Log(originalCenter);
+        //Debug.Log(originalHeight);
     }
     
     
@@ -360,11 +362,15 @@ public class Player_Movement : MonoBehaviour
     
     private void Crouching()
     {
-        GC.transform.position = GC.transform.position + new Vector3(0f, crouchingHeight / 2f, 0f);
+        if (!already_moved_GC)
+        {
+            GC.transform.position = GC.transform.position + new Vector3(0f, crouchingHeight / 2f, 0f);
+        }
         controller.height = crouchingHeight;
         controller.center = crouchingCenter;
         current_speed = crouch_speed;
         isCrouching = true;
+        already_moved_GC = true;
         //Debug.Log("Start Crouching");
     }
     
@@ -376,12 +382,16 @@ public class Player_Movement : MonoBehaviour
         
         if (Physics.OverlapCapsule(point0, point1, controller.radius).Length == noraml_amount) 
         {
-           GC.transform.position = GC.transform.position - new Vector3(0f, crouchingHeight / 2f, 0f);
-           controller.height = originalHeight;
-           controller.center = originalCenter;
-           current_speed = walk_speed;
-           isCrouching = false;
-           //Debug.Log("Stop Crouch");
+            if (already_moved_GC)
+            {
+                 GC.transform.position = GC.transform.position - new Vector3(0f, crouchingHeight / 2f, 0f);
+            }
+            controller.height = originalHeight;
+            controller.center = originalCenter;
+            current_speed = walk_speed;
+            isCrouching = false;
+            already_moved_GC = false;
+            //Debug.Log("Stop Crouch");
         }
         Debug.Log(Physics.OverlapCapsule(point0, point1, controller.radius).Length);
     }
