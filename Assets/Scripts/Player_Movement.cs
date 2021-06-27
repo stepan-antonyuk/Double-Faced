@@ -23,6 +23,7 @@ public class Player_Movement : MonoBehaviour
     //public float originalHeight = 3.8f;
     //public float originalHeight = controller.height;
     public float crouchingHeight = 1.9f;
+    //public float GC_y_chnage = crouchingHeight / 2f;
     
     public int MouseHoldButton = 1; // can be 0,1,2
     
@@ -359,11 +360,12 @@ public class Player_Movement : MonoBehaviour
     
     private void Crouching()
     {
+        GC.transform.position = GC.transform.position + new Vector3(0f, crouchingHeight / 2f, 0f);
         controller.height = crouchingHeight;
         controller.center = crouchingCenter;
         current_speed = crouch_speed;
         isCrouching = true;
-        Debug.Log("Start Crouching");
+        //Debug.Log("Start Crouching");
     }
     
     
@@ -374,11 +376,12 @@ public class Player_Movement : MonoBehaviour
         
         if (Physics.OverlapCapsule(point0, point1, controller.radius).Length == noraml_amount) 
         {
+           GC.transform.position = GC.transform.position - new Vector3(0f, crouchingHeight / 2f, 0f);
            controller.height = originalHeight;
            controller.center = originalCenter;
            current_speed = walk_speed;
            isCrouching = false;
-           Debug.Log("Stop Crouch");
+           //Debug.Log("Stop Crouch");
         }
         Debug.Log(Physics.OverlapCapsule(point0, point1, controller.radius).Length);
     }
