@@ -19,6 +19,7 @@ public class Player_Movement : MonoBehaviour
     public float Jump_Height = 3f;
     public float noraml_State = -2f;
     public float slippery = 0f;
+    public float noraml_amount = 2f;
     //public float originalHeight = 3.8f;
     //public float originalHeight = controller.height;
     public float crouchingHeight = 1.9f;
@@ -30,6 +31,7 @@ public class Player_Movement : MonoBehaviour
     //private bool isCrouching = false;
     
     public string HoldButton = "left ctrl";
+    public string CrouchButton = "c"; // you need this if you use Input.GetKey(CrouchButton) in CheckCrouchingButton()
     public string PlayerTag = "Player";
     public string RunButton = "left shift";
 
@@ -79,6 +81,10 @@ public class Player_Movement : MonoBehaviour
         
         
         isPlayerJustHitTheGround();
+        
+        
+        // crouch
+        CheckCrouchingButton();
         
         
         //check for left shift pressed. Players runs or not. Just currects player's speed.
@@ -334,15 +340,17 @@ public class Player_Movement : MonoBehaviour
         originalCenter = controller.center;
         originalHeight = controller.height;
         current_speed = walk_speed;  
+        Debug.Log(originalCenter);
+        Debug.Log(originalHeight);
     }
     
     
     private void CheckCrouchingButton()
     {
-        if(Input.GetButtonDown("Crouch")) {
+        if(Input.GetKey(CrouchButton)) { // you can use Input.GetButtonDown("Crouch") or Input.GetKey(CrouchButton)
             Crouching();
         }
-        else if(!Input.GetButton("Crouch") && isCrouching)
+        else if(!Input.GetKey(CrouchButton) && isCrouching) // you can use Input.GetButtonDown("Crouch") or Input.GetKey(CrouchButton)
         {
             StopCrouching();
         }
@@ -355,6 +363,7 @@ public class Player_Movement : MonoBehaviour
         controller.center = crouchingCenter;
         current_speed = crouch_speed;
         isCrouching = true;
+        Debug.Log("Start Crouching");
     }
     
     
@@ -363,26 +372,28 @@ public class Player_Movement : MonoBehaviour
         Vector3 point0 = transform.position + originalCenter - new Vector3(0.0f, originalHeight, 0.0f);           
         Vector3 point1 = transform.position + originalCenter + new Vector3(0.0f, originalHeight, 0.0f);
         
-        if (Physics.OverlapCapsule(point0, point1, controller.radius).Length == 0) 
+        if (Physics.OverlapCapsule(point0, point1, controller.radius).Length == noraml_amount) 
         {
            controller.height = originalHeight;
            controller.center = originalCenter;
            current_speed = walk_speed;
            isCrouching = false;
+           Debug.Log("Stop Crouch");
         }
+        Debug.Log(Physics.OverlapCapsule(point0, point1, controller.radius).Length);
     }
     
     
     private void DebugBug()
     {
-        Debug.Log("-----------------------------------");
+        //Debug.Log("-----------------------------------");
         //Debug.Log(Input.GetKey("left ctrl"));
-        //Debug.Log(isGCfeelsGrounded);
-        //Debug.Log(isGCfeelsWalled);
-        //Debug.Log(isWCfeelsWalled);
+        Debug.Log(isGCfeelsGrounded);
+        Debug.Log(isGCfeelsWalled);
+        Debug.Log(isWCfeelsWalled);
         //Debug.Log(current_speed);
         //Debug.Log(velocity.y); 
-        Debug.Log(isCrouching);        
+        //Debug.Log(isCrouching);        
     }
     
     

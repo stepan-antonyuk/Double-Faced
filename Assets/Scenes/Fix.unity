@@ -61973,15 +61973,22 @@ MonoBehaviour:
   WC: {fileID: 2067527397}
   walk_speed: 12
   run_speed: 24
+  crouch_speed: 6
   gravity: -50
   GDistance: 0.54
   WDistance: 2
   Jump_Height: 3
   noraml_State: -2
   slippery: 0
+  crouchingHeight: 1.9
+  MouseHoldButton: 1
   alwaysRun: 1
   MouseCST: 1
   HoldButton: left ctrl
+  CrouchButton: c
+  PlayerTag: Player
+  RunButton: left shift
+  crouchingCenter: {x: 0, y: -0.5, z: 0}
   groundMask:
     serializedVersion: 2
     m_Bits: 64
