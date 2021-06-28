@@ -9,6 +9,7 @@ public class Player_Movement : MonoBehaviour
     
     public Transform GC;
     public Transform WC;
+    //public Transform RC
     
     public float walk_speed = 12f;
     public float run_speed = 24f;
@@ -380,7 +381,7 @@ public class Player_Movement : MonoBehaviour
         Vector3 point0 = transform.position + originalCenter - new Vector3(0.0f, originalHeight, 0.0f);           
         Vector3 point1 = transform.position + originalCenter + new Vector3(0.0f, originalHeight, 0.0f);
         
-        if (Physics.OverlapCapsule(point0, point1, controller.radius).Length == noraml_amount) 
+        if (Physics.OverlapCapsule(point0, point1, controller.radius).Length <= noraml_amount) // TODO optimize. make it check only whats on top of the charachter 
         {
             if (already_moved_GC)
             {
@@ -393,7 +394,9 @@ public class Player_Movement : MonoBehaviour
             already_moved_GC = false;
             //Debug.Log("Stop Crouch");
         }
-        Debug.Log(Physics.OverlapCapsule(point0, point1, controller.radius).Length);
+        //Debug.Log(Physics.OverlapCapsule(point0, point1, controller.radius).Length);
+        //Debug.Log(point0);
+        //Debug.Log(point1);
     }
     
     
@@ -401,12 +404,13 @@ public class Player_Movement : MonoBehaviour
     {
         //Debug.Log("-----------------------------------");
         //Debug.Log(Input.GetKey("left ctrl"));
-        Debug.Log(isGCfeelsGrounded);
-        Debug.Log(isGCfeelsWalled);
-        Debug.Log(isWCfeelsWalled);
+        //Debug.Log(isGCfeelsGrounded);
+        //Debug.Log(isGCfeelsWalled);
+        //Debug.Log(isWCfeelsWalled);
         //Debug.Log(current_speed);
         //Debug.Log(velocity.y); 
-        //Debug.Log(isCrouching);        
+        //Debug.Log(isCrouching); 
+        Debug.Log(originalHeight);       
     }
     
     
