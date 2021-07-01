@@ -6,6 +6,8 @@ TagManager:
   tags:
   - RedCube
   - WhiteCube
+  - TR
+  - TW
   layers:
   - Default
   - TransparentFX
