@@ -39,7 +39,7 @@ public class TestManager : MonoBehaviour
          objs = GameObject.FindGameObjectsWithTag(RedCube);
          foreach(GameObject lightuser in objs) 
          {
-            my_animation_controller = lightuser.GetComponent<Animator> ();
+            SetAnimationController(lightuser);
          
             lightuser.gameObject.GetComponent<Collider>().enabled = !lightuser.gameObject.GetComponent<Collider>().enabled;
             //lightuser.gameObject.GetComponent<Renderer>().enabled = !lightuser.gameObject.GetComponent<Renderer>().enabled;
@@ -54,9 +54,9 @@ public class TestManager : MonoBehaviour
     {
          objs = GameObject.FindGameObjectsWithTag(WhiteCube);
          foreach(GameObject lightuser in objs) 
-         {
-            my_animation_controller = lightuser.GetComponent<Animator> ();
-         
+         {  
+            SetAnimationController(lightuser);   
+                   
             lightuser.gameObject.GetComponent<Collider>().enabled = !lightuser.gameObject.GetComponent<Collider>().enabled;
             //lightuser.gameObject.GetComponent<Renderer>().enabled = !lightuser.gameObject.GetComponent<Renderer>().enabled;
             
@@ -107,8 +107,8 @@ public class TestManager : MonoBehaviour
         objs = GameObject.FindGameObjectsWithTag(RedCube);
         foreach(GameObject lightuser in objs) 
         {
-            my_animation_controller = lightuser.GetComponent<Animator> ();
-            
+            SetAnimationController(lightuser);
+        
             lightuser.gameObject.GetComponent<Collider>().enabled = Rstate;
             //lightuser.gameObject.GetComponent<Renderer>().enabled = Rstate;
             
@@ -122,7 +122,7 @@ public class TestManager : MonoBehaviour
         objs = GameObject.FindGameObjectsWithTag(WhiteCube);
         foreach(GameObject lightuser in objs) 
         {
-            my_animation_controller = lightuser.GetComponent<Animator> ();
+            SetAnimationController(lightuser);
         
             lightuser.gameObject.GetComponent<Collider>().enabled = !Rstate;
             //lightuser.gameObject.GetComponent<Renderer>().enabled = !Rstate;
@@ -168,4 +168,10 @@ public class TestManager : MonoBehaviour
     }
     
     
+    private void SetAnimationController(GameObject lightuser)
+    {
+        my_animation_controller = lightuser.GetComponent<Animator> ();
+    }
+        
 }
+
