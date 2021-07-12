@@ -27,10 +27,15 @@ public class TestManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        /*
         if(Input.GetKeyDown(ChangePhase))
         {
+            PlaySound("ChangeColor");
             ChangeUpdate();
         }
+        */
+        
+        ChangePhaseFunction();
     }
     
     
@@ -172,6 +177,22 @@ public class TestManager : MonoBehaviour
     {
         my_animation_controller = lightuser.GetComponent<Animator> ();
     }
-        
+    
+    
+    private void PlaySound(string clip)
+    {
+        //Debug.Log("PlayingSound   " + clip);
+        SoundManager.PlaySound(clip);
+    }     
+    
+    
+    private void ChangePhaseFunction()
+    {
+        if(Input.GetKeyDown(ChangePhase))
+        {
+            PlaySound("ChangeColor");
+            ChangeUpdate();
+        }
+    }
 }
 

@@ -74,5 +74,12 @@ public class GameManager : MonoBehaviour
        changeStageR();
        changeStageW();
     }
+    
+    
+    private void PlaySound(string clip)
+    {
+        //Debug.Log("PlayingSound   " + clip);
+        SoundManager.PlaySound(clip);
+    }
 }
 

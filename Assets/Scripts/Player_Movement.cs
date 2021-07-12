@@ -410,7 +410,7 @@ public class Player_Movement : MonoBehaviour
         //Debug.Log(current_speed);
         //Debug.Log(velocity.y); 
         //Debug.Log(isCrouching); 
-        Debug.Log(originalHeight);       
+        //Debug.Log(originalHeight);       
     }
     
     

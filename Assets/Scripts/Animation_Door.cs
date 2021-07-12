@@ -9,7 +9,8 @@ public class Animation_Door : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag("Player"))
-        {
+        {   
+            //PlaySound("DoorOpen");
             my_animator.SetBool("Triggered", true);
         }
     }
@@ -18,8 +19,16 @@ public class Animation_Door : MonoBehaviour
     {
         if(other.CompareTag("Player"))
         {
+            //PlaySound("DoorClose");
             my_animator.SetBool("Triggered", false);
         }
     }
+    
+    private void PlaySound(string clip)
+    {
+        //Debug.Log("PlayingSound   " + clip);
+        SoundManager.PlaySound(clip);
+    }
+    
 }
 
