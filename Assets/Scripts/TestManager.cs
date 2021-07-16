@@ -10,11 +10,13 @@ public class TestManager : MonoBehaviour
     
     //public float Delay = 3f;
     
-    public bool Rstate = false;
+    public bool Fstate = false;
     
-    string WhiteCube = "TW";
-    string RedCube = "TR";
+    string WhiteCube = "SecondCube";
+    string RedCube = "FirstCube";
     string ChangePhase = "r";
+    string FadeIn = "FadeIn";
+    string FadeOut = "FadeOut";
     
     bool WTF;
 
@@ -73,15 +75,15 @@ public class TestManager : MonoBehaviour
     
     private void AnimationCgangeRed()
     {
-        my_animation_controller.SetBool("FadeIn", WTF);
-        my_animation_controller.SetBool("FadeOut", !WTF);
+        my_animation_controller.SetBool(FadeIn, WTF);
+        my_animation_controller.SetBool(FadeOut, !WTF);
     }
     
     
     private void AnimationCgangeWhite()
     {
-        my_animation_controller.SetBool("FadeIn", !WTF);
-        my_animation_controller.SetBool("FadeOut", WTF);
+        my_animation_controller.SetBool(FadeIn, !WTF);
+        my_animation_controller.SetBool(FadeOut, WTF);
     }
     
     
@@ -114,8 +116,8 @@ public class TestManager : MonoBehaviour
         {
             SetAnimationController(lightuser);
         
-            lightuser.gameObject.GetComponent<Collider>().enabled = Rstate;
-            //lightuser.gameObject.GetComponent<Renderer>().enabled = Rstate;
+            lightuser.gameObject.GetComponent<Collider>().enabled = Fstate;
+            //lightuser.gameObject.GetComponent<Renderer>().enabled = Fstate;
             
             SetAnimationRed();
         }
@@ -129,8 +131,8 @@ public class TestManager : MonoBehaviour
         {
             SetAnimationController(lightuser);
         
-            lightuser.gameObject.GetComponent<Collider>().enabled = !Rstate;
-            //lightuser.gameObject.GetComponent<Renderer>().enabled = !Rstate;
+            lightuser.gameObject.GetComponent<Collider>().enabled = !Fstate;
+            //lightuser.gameObject.GetComponent<Renderer>().enabled = !Fstate;
             
             SetAnimationWhite(); 
         }
@@ -139,37 +141,37 @@ public class TestManager : MonoBehaviour
     
     private void SetAnimationRed()
     {
-        if(Rstate)
+        if(Fstate)
         {
-            my_animation_controller.SetBool("FadeIn", false);
-            my_animation_controller.SetBool("FadeOut", false);
+            my_animation_controller.SetBool(FadeIn, false);
+            my_animation_controller.SetBool(FadeOut, false);
         }
         else
         {
-            my_animation_controller.SetBool("FadeIn", true);
-            my_animation_controller.SetBool("FadeOut", false);
+            my_animation_controller.SetBool(FadeIn, true);
+            my_animation_controller.SetBool(FadeOut, false);
         }
     }
     
     
     private void SetAnimationWhite()
     {
-        if(Rstate)
+        if(Fstate)
         {
-            my_animation_controller.SetBool("FadeIn", true);
-            my_animation_controller.SetBool("FadeOut", false);
+            my_animation_controller.SetBool(FadeIn, true);
+            my_animation_controller.SetBool(FadeOut, false);
         }
         else
         {
-            my_animation_controller.SetBool("FadeIn", false);
-            my_animation_controller.SetBool("FadeOut", false);
+            my_animation_controller.SetBool(FadeIn, false);
+            my_animation_controller.SetBool(FadeOut, false);
         }
     }
     
     
     private void SetWTF()
     {
-        WTF = Rstate;
+        WTF = Fstate;
     }
     
     

@@ -9,6 +9,8 @@ TagManager:
   - TR
   - TW
   - Triger
+  - FirstCube
+  - SecondCube
   layers:
   - Default
   - TransparentFX

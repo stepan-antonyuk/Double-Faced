@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 367277315169638201}
   m_Layer: 7
   m_Name: RedAnimCube
-  m_TagString: TR
+  m_TagString: FirstCube
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
