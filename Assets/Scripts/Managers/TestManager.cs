@@ -10,10 +10,10 @@ public class TestManager : MonoBehaviour
     
     //public float Delay = 3f;
     
-    public bool Fstate = false;
+    public bool Fstate = false; // state of first cube on or off
     
-    string WhiteCube = "SecondCube";
-    string RedCube = "FirstCube";
+    string SecondCube = "SecondCube";
+    string FirstCube = "FirstCube";
     string ChangePhase = "r";
     string FadeIn = "FadeIn";
     string FadeOut = "FadeOut";
@@ -41,9 +41,9 @@ public class TestManager : MonoBehaviour
     }
     
     
-    private void changeStageR()
+    private void changeStageFirstCube()
     {
-         objs = GameObject.FindGameObjectsWithTag(RedCube);
+         objs = GameObject.FindGameObjectsWithTag(FirstCube);
          foreach(GameObject lightuser in objs) 
          {
             SetAnimationController(lightuser);
@@ -51,15 +51,15 @@ public class TestManager : MonoBehaviour
             lightuser.gameObject.GetComponent<Collider>().enabled = !lightuser.gameObject.GetComponent<Collider>().enabled;
             //lightuser.gameObject.GetComponent<Renderer>().enabled = !lightuser.gameObject.GetComponent<Renderer>().enabled;
             
-            AnimationCgangeRed();
+            AnimationCgangeFirstCube();
          }
 
     }
     
     
-    private void changeStageW()
+    private void changeStageSecondCube()
     {
-         objs = GameObject.FindGameObjectsWithTag(WhiteCube);
+         objs = GameObject.FindGameObjectsWithTag(SecondCube);
          foreach(GameObject lightuser in objs) 
          {  
             SetAnimationController(lightuser);   
@@ -67,20 +67,20 @@ public class TestManager : MonoBehaviour
             lightuser.gameObject.GetComponent<Collider>().enabled = !lightuser.gameObject.GetComponent<Collider>().enabled;
             //lightuser.gameObject.GetComponent<Renderer>().enabled = !lightuser.gameObject.GetComponent<Renderer>().enabled;
             
-            AnimationCgangeWhite();
+            AnimationCgangeSecondCube();
          }
 
     }  
     
     
-    private void AnimationCgangeRed()
+    private void AnimationCgangeFirstCube()
     {
         my_animation_controller.SetBool(FadeIn, WTF);
         my_animation_controller.SetBool(FadeOut, !WTF);
     }
     
     
-    private void AnimationCgangeWhite()
+    private void AnimationCgangeSecondCube()
     {
         my_animation_controller.SetBool(FadeIn, !WTF);
         my_animation_controller.SetBool(FadeOut, WTF);
@@ -95,23 +95,23 @@ public class TestManager : MonoBehaviour
     
     private void ChangeUpdate()
     {
-       changeStageR();
-       changeStageW();
+       changeStageFirstCube();
+       changeStageSecondCube();
        RevWTF();
     }
     
     
     private void StateTheState()
     {
-        SetRedCube();
-        SetWhiteCube();  
+        SetFirstCube();
+        SetSecondCube();  
         SetWTF(); 
     }
     
     
-    private void SetRedCube()
+    private void SetFirstCube()
     {
-        objs = GameObject.FindGameObjectsWithTag(RedCube);
+        objs = GameObject.FindGameObjectsWithTag(FirstCube);
         foreach(GameObject lightuser in objs) 
         {
             SetAnimationController(lightuser);
@@ -119,14 +119,14 @@ public class TestManager : MonoBehaviour
             lightuser.gameObject.GetComponent<Collider>().enabled = Fstate;
             //lightuser.gameObject.GetComponent<Renderer>().enabled = Fstate;
             
-            SetAnimationRed();
+            SetAnimationFirstCube();
         }
     }
     
     
-    private void SetWhiteCube()
+    private void SetSecondCube()
     {
-        objs = GameObject.FindGameObjectsWithTag(WhiteCube);
+        objs = GameObject.FindGameObjectsWithTag(SecondCube);
         foreach(GameObject lightuser in objs) 
         {
             SetAnimationController(lightuser);
@@ -134,12 +134,12 @@ public class TestManager : MonoBehaviour
             lightuser.gameObject.GetComponent<Collider>().enabled = !Fstate;
             //lightuser.gameObject.GetComponent<Renderer>().enabled = !Fstate;
             
-            SetAnimationWhite(); 
+            SetAnimationSecondCube(); 
         }
     }
     
     
-    private void SetAnimationRed()
+    private void SetAnimationFirstCube()
     {
         if(Fstate)
         {
@@ -154,7 +154,7 @@ public class TestManager : MonoBehaviour
     }
     
     
-    private void SetAnimationWhite()
+    private void SetAnimationSecondCube()
     {
         if(Fstate)
         {
@@ -181,10 +181,10 @@ public class TestManager : MonoBehaviour
     }
     
     
-    private void PlaySound(string clip)
+    private void PlayCubeSound(string clip)
     {
         //Debug.Log("PlayingSound   " + clip);
-        SoundManager.PlaySound(clip);
+        SoundManager.PlayCubeSound(clip);
     }     
     
     
@@ -192,7 +192,7 @@ public class TestManager : MonoBehaviour
     {
         if(Input.GetKeyDown(ChangePhase))
         {
-            PlaySound("ChangeColor");
+            PlayCubeSound("ChangeColor");
             ChangeUpdate();
         }
     }

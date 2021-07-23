@@ -7,6 +7,8 @@ public class SoundManager : MonoBehaviour
 
     public static AudioClip DoorOpen, ChangeColor, StairOpen, Dirt_Jogging, Dirt_Running, Dirt_Walking;
     static AudioSource audioSrc;
+    static AudioSource playerSrc;
+    static AudioSource cubeSrc;
 
     // Start is called before the first frame update
     void Start()
@@ -19,6 +21,8 @@ public class SoundManager : MonoBehaviour
         Dirt_Walking = Resources.Load<AudioClip> ("Dirt_Walking");        
         
         audioSrc = GetComponent<AudioSource> ();
+        playerSrc = GetComponent<AudioSource> ();
+        cubeSrc = GetComponent<AudioSource> ();
     }
 
     // Update is called once per frame
@@ -59,6 +63,48 @@ public class SoundManager : MonoBehaviour
     }
     
     
+    public static void PlayPlayerSound (string clip)
+    {
+        switch (clip)
+        {
+            case "Jogging":
+                playerSrc.PlayOneShot(Dirt_Jogging);
+                break;
+            case "Running":
+                playerSrc.PlayOneShot(Dirt_Running);
+                break;
+            case "Walking":
+                playerSrc.PlayOneShot(Dirt_Walking);
+                break;
+        }
+    }
+    
+    
+    public static void PlayCubeSound (string clip)
+    {
+        switch (clip)
+        {
+            case "ChangeColor":
+                cubeSrc.PlayOneShot(ChangeColor);
+                break;
+        }
+    }
+    
+    
+    // TODO fix all below
+    public static bool AlreadyPlayingX(AudioSource x)
+    {
+        if (x.isPlaying)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    
+    
     public static bool AlreadyPlaying()
     {
         if (audioSrc.isPlaying)
@@ -72,8 +118,27 @@ public class SoundManager : MonoBehaviour
     }
     
     
+    public static bool PlayerSrcAlreadyPlaying()
+    {
+        if (playerSrc.isPlaying)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    
+    
     public static void StopPlaying()
     {
         audioSrc.Stop();
+    }
+    
+    
+    public static void StopPlayingPlayerSrc()
+    {
+        playerSrc.Stop();
     }
 }

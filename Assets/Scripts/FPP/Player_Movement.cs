@@ -61,6 +61,7 @@ public class Player_Movement : MonoBehaviour
     bool already_moved_GC;
     
     bool was_running = false; // testing
+    bool was_moving = false; // testing
     
     Vector3 velocity;
     Vector3 originalCenter;
@@ -262,7 +263,7 @@ public class Player_Movement : MonoBehaviour
     
     private void isHoldTheWallMouseButtonPressed()
     {
-        if((Input.GetMouseButton(MouseHoldButton) && isWCfeelsWalled ) && !onTheGround) // TODO change Input.GetKey("left ctrl") to Input.GetKeyDown("left ctrl")
+        if((Input.GetMouseButton(MouseHoldButton) && isWCfeelsWalled ) && !onTheGround)
         {
             HoldForWall();
         }
@@ -403,10 +404,10 @@ public class Player_Movement : MonoBehaviour
     }
     
     
-    private void PlaySound(string clip)
+    private void PlayPlayerSound(string clip)
     {
         //Debug.Log("PlayingSound   " + clip);
-        SoundManager.PlaySound(clip);
+        SoundManager.PlayPlayerSound(clip);
     }   
     
     
@@ -423,32 +424,56 @@ public class Player_Movement : MonoBehaviour
     }
     
     
+    private void PlayerStopPlayingSounds()
+    {
+        if(was_moving == true)
+        {
+            SoundManager.StopPlayingPlayerSrc();  
+            was_moving = false;
+        }
+    }
+    
+    
+    private void PlayWalkingSound()
+    {
+        SoundManager.StopPlayingPlayerSrc();  
+        PlayPlayerSound("Walking");
+        was_running = false;
+        was_moving = true;
+    }
+    
+    
+    private void PlayJoggingSound()
+    {
+        SoundManager.StopPlayingPlayerSrc();  
+        PlayPlayerSound("Jogging");
+        was_running = true;
+        was_moving = true;
+    }
+    
+    
     private void MovingSounds()
     {
         if(player_moving())
         {
             if(current_speed == run_speed)
             {
-                if(!SoundManager.AlreadyPlaying() || !was_running)
+                if(!SoundManager.PlayerSrcAlreadyPlaying() || !was_running)
                 {   
-                    SoundManager.StopPlaying();  
-                    PlaySound("Jogging");
-                    was_running = true;
+                    PlayJoggingSound();
                 }
             }
             else
             {
-                if(!SoundManager.AlreadyPlaying() || was_running)
+                if(!SoundManager.PlayerSrcAlreadyPlaying() || was_running)
                 {
-                    SoundManager.StopPlaying();  
-                    PlaySound("Walking");
-                    was_running = false;
+                    PlayWalkingSound();
                 }
             }
         }
         else
         {
-            SoundManager.StopPlaying();  
+            PlayerStopPlayingSounds();
         }
     }
     
